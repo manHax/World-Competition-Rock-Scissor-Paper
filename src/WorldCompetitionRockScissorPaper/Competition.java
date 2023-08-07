@@ -8,6 +8,9 @@ public class Competition {
     List<Group> groups;
     List<Nation> winnerAllGroup = new ArrayList<>();
     List<Nation> runnerUpAllGroup = new ArrayList<>();
+    Nation champion;
+    Nation runnerUp;
+    Nation thirdPlace;
 
 
     public List<Group> getGroups() {
@@ -93,11 +96,29 @@ public class Competition {
     public void doKnockOutFase(KnockOutFase kc) {
 //        KnockOutFase kc = new KnockOutFase(this.winnerAllGroup,runnerUpAllGroup);
         kc.doKnockOutBig16Fase();
-        if (kc.big16Member.size() == 2) {
+        if (kc.thirdPlaceMember.size() == 2) {
+            for (Match match : kc.thirdPotitionMatch) {
+                Nation knokedOut = match.startKnockOutMatch();
+                kc.thirdPlaceMember.remove(knokedOut);
+                this.thirdPlace=kc.thirdPlaceMember.get(0);
+            }
+        }
+        if (kc.big16Member.size() == 4){
+            for (Match match : kc.eightFinalMatchs) {
+                Nation knokedOut = match.startKnockOutMatch();
+                kc.thirdPlaceMember.add(knokedOut);
+                kc.big16Member.remove(knokedOut);
+            }
+            doKnockOutFase(kc);
+        }
+        else
+            if (kc.big16Member.size() == 2) {
             System.out.println("FINAL MATCH");
             for (Match match : kc.eightFinalMatchs) {
                 Nation knokedOut = match.startKnockOutMatch();
+                this.runnerUp=knokedOut;
                 kc.big16Member.remove(knokedOut);
+                this.champion=kc.big16Member.get(0);
             }
         } else {
             for (Match match : kc.eightFinalMatchs) {
@@ -132,6 +153,12 @@ public class Competition {
         }
         KnockOutFase kc = new KnockOutFase(c.winnerAllGroup, c.runnerUpAllGroup);
         c.doKnockOutFase(kc);
+        System.out.println("\n**************************");
+        System.out.println("Champion : "+c.champion.name);
+        System.out.println("Runner Up : "+c.runnerUp.name);
+        System.out.println("Third Place : "+c.thirdPlace.name);
+        System.out.println("**************************");
+
 
 
 //        kc.doKnockOutBig16Fase();

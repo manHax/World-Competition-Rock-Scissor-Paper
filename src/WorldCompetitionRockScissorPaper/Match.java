@@ -75,7 +75,7 @@ public class Match {
         int battleID = 1;
         if (agr != 5) {
             for (int i = 0; i < agr; i++) {
-                System.out.println("//////////////////////");
+                System.out.println("\n//////////////////////");
                 System.out.println("Battle ke-" + battleID);
                 combat(p1, p2);
                 battleID++;
@@ -94,7 +94,7 @@ public class Match {
             matchResult(p1, p2);
         } else {
             while (p1.wins < agr && p2.wins < agr) {
-                System.out.println("//////////////////////");
+                System.out.println("\n//////////////////////");
                 System.out.println("Battle ke-" + battleID);
                 combat(p1, p2);
                 System.out.println("Kedudukan Sementara :");
@@ -113,14 +113,14 @@ public class Match {
     }
 
     public void startMatch() {
-        System.out.println("\nStart " + matchId);
+        System.out.println("\n>> Start " + matchId+" <<");
         System.out.println(player1.name+" vs " + player2.name);
         System.out.println("Battle Start on " + matchDate);
         this.combatWithWins(player1, player2, 7);
     }
 
     public Nation startKnockOutMatch() {
-        System.out.println("\nStart " + matchId);
+        System.out.println("\n>> Start " + matchId+" <<");
         System.out.println(player1.name+" vs " + player2.name);
         System.out.println("Battle Start on " + matchDate);
         this.combatWithWins(player1, player2, 5);
