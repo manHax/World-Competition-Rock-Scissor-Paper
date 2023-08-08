@@ -1,7 +1,9 @@
 package WorldCompetitionRockScissorPaper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Competition {
     List<Nation> nations;
@@ -37,44 +39,32 @@ public class Competition {
     }
 
     public void generateNations() {
-        ArrayList<String> asiaCountries = new ArrayList<>();
-        asiaCountries.add("Afghanistan");
-        asiaCountries.add("Armenia");
-        asiaCountries.add("Azerbaijan");
-        asiaCountries.add("Bahrain");
-        asiaCountries.add("Bangladesh");
-        asiaCountries.add("Bhutan");
-        asiaCountries.add("Brunei");
-        asiaCountries.add("Cambodia");
-        asiaCountries.add("China");
-        asiaCountries.add("Georgia");
-        asiaCountries.add("India");
-        asiaCountries.add("Indonesia");
-        asiaCountries.add("Iran");
-        asiaCountries.add("Iraq");
-        asiaCountries.add("Israel");
-        asiaCountries.add("Japan");
-        asiaCountries.add("Jordan");
-        asiaCountries.add("Kazakhstan");
-        asiaCountries.add("Kuwait");
-        asiaCountries.add("Kyrgyzstan");
-        asiaCountries.add("Laos");
-        asiaCountries.add("Lebanon");
-        asiaCountries.add("Malaysia");
-        asiaCountries.add("Maldives");
-        asiaCountries.add("Mongolia");
-        asiaCountries.add("Myanmar (Burma)");
-        asiaCountries.add("Nepal");
-        asiaCountries.add("North Korea");
-        asiaCountries.add("Oman");
-        asiaCountries.add("Pakistan");
-        asiaCountries.add("Palestine");
-        asiaCountries.add("Philippines");
-
-        for (String nation : asiaCountries) {
-            addNations(new Nation(nation));
-            System.out.println(asiaCountries.size() + " " + nation);
+        List<String> countries = new ArrayList<>(Arrays.asList(
+                "Argentina", "Australia", "Austria", "Belgium", "Bolivia",
+                "Brazil", "Cameroon", "Canada", "Chile", "China PR", "Colombia",
+                "Costa Rica", "Croatia", "Czech Republic", "Denmark", "Ecuador",
+                "Egypt", "England", "Finland", "France", "Germany", "Greece",
+                "Hungary", "India", "Indonesia", "Iran", "Iraq", "Italy", "Japan",
+                "Mexico", "Netherlands", "New Zealand", "Nigeria", "Norway", "Paraguay",
+                "Peru", "Poland", "Portugal", "Romania", "Russia", "Saudi Arabia",
+                "Scotland", "Serbia", "Slovakia", "South Africa", "South Korea",
+                "Spain", "Sweden", "Switzerland", "Turkey", "Ukraine", "United States",
+                "Uruguay", "Wales"
+        ));
+        ArrayList<Integer> temp = new ArrayList<>();
+        while (this.nations.size()<32){
+            Random rand = new Random();
+            int tempInt =rand.nextInt(54);
+            if (!temp.contains(tempInt)) {
+                addNations(new Nation(countries.get(tempInt)));
+                temp.add(tempInt);
+            }
         }
+
+//        for (String nation : nations) {
+//            addNations(new Nation(nation));
+//            System.out.println(nations.size() + " " + nation);
+//        }
 //        for (int i = 0; i < 32; i++) {
 //            addNations(new Nation("Nation "+i));
 //        }

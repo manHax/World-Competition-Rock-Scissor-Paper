@@ -3,8 +3,9 @@ package WorldCompetitionRockScissorPaper;
 import java.util.*;
 
 public class Group {
-    Nation winner=null;
-    Nation runnerUp=null;
+    Nation winner = null;
+    Nation runnerUp = null;
+
     public String getGroupName() {
         return groupName;
     }
@@ -36,28 +37,31 @@ public class Group {
     }
 
 
-
     public Group(String groupName, List<Nation> groupMember) {
-        this.groupName=groupName;
-        this.groupMember=groupMember;
-        this.groupMember=this.groupMember;
+        this.groupName = groupName;
+        this.groupMember = groupMember;
+        this.groupMember = this.groupMember;
         System.out.println(groupName);
-//        System.out.println(groupMember);
+        for (Nation na : groupMember) {
+            System.out.println("> "+na.name);
+        }
     }
-    public String getClassement(){
+
+    public String getClassement() {
         System.out.println("++++++++++++++++++++++++++++++");
-        for (Nation nation:groupMember) {
-            System.out.println(">> "+nation.name);
-            System.out.println("Point : "+nation.getPointGroup());
-            System.out.println("Skors : "+nation.winsScore);
-            System.out.println("Wins : "+nation.getWinsGroup());
-            System.out.println("Draws : "+nation.getDrawsGroup());
-            System.out.println("Loses : "+nation.getLosesGroup());
+        for (Nation nation : groupMember) {
+            System.out.println(">> " + nation.name);
+            System.out.println("Point : " + nation.getPointGroup());
+            System.out.println("Skors : " + nation.winsScore);
+            System.out.println("Wins : " + nation.getWinsGroup());
+            System.out.println("Draws : " + nation.getDrawsGroup());
+            System.out.println("Loses : " + nation.getLosesGroup());
             System.out.println("");
         }
         return null;
     }
-    public List<Nation> getWinnerAndRunnerUp(){
+
+    public List<Nation> getWinnerAndRunnerUp() {
         List<Nation> winnerAndRunnerUp = new ArrayList<>();
         List<Integer> list1 = new ArrayList<>();
         List<Integer> list2 = new ArrayList<>();
@@ -114,99 +118,100 @@ public class Group {
                 System.out.println("nothing to compare!\nusing default");
                 winnerAndRunnerUp.add(groupMember.get(sortedList1b.get(3)));
                 winnerAndRunnerUp.add(groupMember.get(sortedList1b.get(2)));
-                winner=groupMember.get(sortedList1b.get(3));
-                runnerUp=groupMember.get(sortedList1b.get(2));
-            }else {
+                winner = groupMember.get(sortedList1b.get(3));
+                runnerUp = groupMember.get(sortedList1b.get(2));
+            } else {
                 winnerAndRunnerUp.add(groupMember.get(sortedList1b.get(3)));
                 winnerAndRunnerUp.add(groupMember.get(sortedList1b.get(2)));
-                winner=groupMember.get(sortedList1b.get(3));
-                runnerUp=groupMember.get(sortedList1b.get(2));
+                winner = groupMember.get(sortedList1b.get(3));
+                runnerUp = groupMember.get(sortedList1b.get(2));
             }
-        }else {
+        } else {
             winnerAndRunnerUp.add(groupMember.get(sortedList1.get(3)));
             winnerAndRunnerUp.add(groupMember.get(sortedList1.get(2)));
-            winner=groupMember.get(sortedList1.get(3));
-            runnerUp=groupMember.get(sortedList1.get(2));
+            winner = groupMember.get(sortedList1.get(3));
+            runnerUp = groupMember.get(sortedList1.get(2));
         }
-        System.out.println("winner "+groupName+" is "+winnerAndRunnerUp.get(0).name);
-        System.out.println("runner up "+groupName+" is "+winnerAndRunnerUp.get(1).name);
+        System.out.println("winner " + groupName + " is " + winnerAndRunnerUp.get(0).name);
+        System.out.println("runner up " + groupName + " is " + winnerAndRunnerUp.get(1).name);
         return winnerAndRunnerUp;
     }
-    public Nation getRunnerUp(){
+
+    public Nation getRunnerUp() {
         System.out.println("++++++++++++++++++++++++++++++");
-        for (Nation nation:groupMember) {
-            System.out.println(">> "+nation.name);
-            System.out.println("Point : "+nation.getPointGroup());
-            System.out.println("Wins : "+nation.getWinsGroup());
-            System.out.println("Draws : "+nation.getDrawsGroup());
-            System.out.println("Loses : "+nation.getLosesGroup());
+        for (Nation nation : groupMember) {
+            System.out.println(">> " + nation.name);
+            System.out.println("Point : " + nation.getPointGroup());
+            System.out.println("Wins : " + nation.getWinsGroup());
+            System.out.println("Draws : " + nation.getDrawsGroup());
+            System.out.println("Loses : " + nation.getLosesGroup());
             System.out.println("");
         }
         return null;
     }
 
-    public Nation getWinner(){
-        List<Integer> memberId= new ArrayList<>();
+    public Nation getWinner() {
+        List<Integer> memberId = new ArrayList<>();
         System.out.println("++++++++++++++++++++++++++++++");
 
         for (int i = 0; i < groupMember.size(); i++) {
-            System.out.println(groupMember.get(i)+" - "+i);
+            System.out.println(groupMember.get(i) + " - " + i);
 //            System.out.println(">> "+groupMember.get(i).name);
 //            System.out.println("Point : "+groupMember.get(i).getPointGroup());
 //            System.out.println("Wins : "+groupMember.get(i).getWinsGroup());
 //            System.out.println("Draws : "+groupMember.get(i).getDrawsGroup());
 //            System.out.println("Loses : "+groupMember.get(i).getLosesGroup());
 //            System.out.println("");
-            if (i==0) {
-                winner=groupMember.get(i);
-            }
-            else if (winner.getPointGroup()<groupMember.get(i).getPointGroup()) {
-                winner=groupMember.get(i);
-            } else if (winner.getPointGroup()==groupMember.get(i).getPointGroup()) {
+            if (i == 0) {
+                winner = groupMember.get(i);
+            } else if (winner.getPointGroup() < groupMember.get(i).getPointGroup()) {
+                winner = groupMember.get(i);
+            } else if (winner.getPointGroup() == groupMember.get(i).getPointGroup()) {
                 memberId.add(i);
             }
-            System.out.println(winner.getPointGroup()+" = "+winner.name);
-            System.out.println(groupMember.get(i).getPointGroup()+" - "+groupMember.get(i).name);
+            System.out.println(winner.getPointGroup() + " = " + winner.name);
+            System.out.println(groupMember.get(i).getPointGroup() + " - " + groupMember.get(i).name);
         }
         if (!memberId.isEmpty()) {
             System.out.println(memberId.size());
             for (int i : memberId) {
-                System.out.println(winner.getPointGroup()+" = "+winner.name);
-                System.out.println(groupMember.get(i).getPointGroup()+" - "+groupMember.get(i).name);
-                if (winner.getPointGroup()<groupMember.get(i).getPointGroup()) {
-                    winner=groupMember.get(i);
-                }else if (winner.winsScore<groupMember.get(i).winsScore) {
-                    winner=groupMember.get(i);
+                System.out.println(winner.getPointGroup() + " = " + winner.name);
+                System.out.println(groupMember.get(i).getPointGroup() + " - " + groupMember.get(i).name);
+                if (winner.getPointGroup() < groupMember.get(i).getPointGroup()) {
+                    winner = groupMember.get(i);
+                } else if (winner.winsScore < groupMember.get(i).winsScore) {
+                    winner = groupMember.get(i);
                 }
             }
 
         }
-        System.out.println("the winner of the group "+winner.name);
+        System.out.println("the winner of the group " + winner.name);
         return null;
     }
 
 
-    public void matchMaking(){
-        int player1 =0;
-        int player2 =1;
+    public void matchMaking() {
+        int player1 = 0;
+        int player2 = 1;
         for (int i = 0; i < 6; i++) {
 
             player2++;
-            if (player2 >3) {
+            if (player2 > 3) {
                 player1++;
-                player2 = player1 +1;
+                player2 = player1 + 1;
             }
         }
     }
-    public void doGroupFase(){
-        int player1 =0;
-        int player2 =1;
+
+    public void doGroupFase() {
+        int player1 = 0;
+        int player2 = 1;
         for (int i = 0; i < 6; i++) {
-            setGroupMatch(new Match(groupName+" Match ke-"+(i+1), getGroupMember().get(player1),getGroupMember().get(player2),new Date()));
+            setGroupMatch(new Match(groupName + " Match ke-" + (i + 1), getGroupMember().get(player1), getGroupMember().get(player2), new Date()));
             player2++;
-            if (player2 >3) {
+            if (player2 > 3) {
                 player1++;
-                player2 = player1 +1;
+                player2 = player1 + 1;
             }
         }
     }
