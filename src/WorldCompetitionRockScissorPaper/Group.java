@@ -14,7 +14,6 @@ public class Group {
         this.groupName = groupName;
     }
 
-
     public void setGroupMember(List<Nation> groupMember) {
         this.groupMember = groupMember;
     }
@@ -31,6 +30,7 @@ public class Group {
 
     List<Match> groupMatch = new ArrayList<>();
     List<Nation> groupMember;
+    List<Nation> groupMemberSorted;
 
     public List<Nation> getGroupMember() {
         return groupMember;
@@ -40,7 +40,7 @@ public class Group {
     public Group(String groupName, List<Nation> groupMember) {
         this.groupName = groupName;
         this.groupMember = groupMember;
-        this.groupMember = this.groupMember;
+        this.groupMemberSorted = this.groupMember;
         System.out.println(groupName);
         for (Nation na : groupMember) {
             System.out.println("> "+na.name);
@@ -48,16 +48,32 @@ public class Group {
     }
 
     public String getClassement() {
-        System.out.println("++++++++++++++++++++++++++++++");
-        for (Nation nation : groupMember) {
-            System.out.println(">> " + nation.name);
-            System.out.println("Point : " + nation.getPointGroup());
-            System.out.println("Skors : " + nation.winsScore);
-            System.out.println("Wins : " + nation.getWinsGroup());
-            System.out.println("Draws : " + nation.getDrawsGroup());
-            System.out.println("Loses : " + nation.getLosesGroup());
-            System.out.println("");
+//        Collections.sort(groupMemberSorted, Comparator.comparing(Nation::getPointGroup));
+        Collections.sort(groupMemberSorted, (s1, s2) -> Integer.compare(s2.getPointGroup(), s1.getPointGroup()));
+        if (groupMemberSorted.get(0).getPointGroup() == groupMemberSorted.get(1).getPointGroup()) {
+            Collections.sort(groupMemberSorted, (s1, s2) -> Integer.compare(s2.winsScore, s1.winsScore));
         }
+
+        System.out.println("RPS League Table");
+        System.out.println("+-----------------------------------+");
+        System.out.println("| Nations      |  W  D  L  Pts  Scr |");
+        System.out.println("+-----------------------------------+");
+
+        for (Nation team : groupMemberSorted) {
+            System.out.printf("| %-12s | %2s %2s %2s %4s %4s |\n",
+                    team.name,team.getWinsGroup(),team.getDrawsGroup(),team.getLosesGroup(),team.getPointGroup(),team.winsScore);
+        }
+        System.out.println("+-----------------------------------+");
+//        System.out.println("++++++++ Classement "+groupName+" ++++++++++++");
+//        for (Nation nation : groupMemberSorted) {
+//            System.out.println(">> " + nation.name);
+//            System.out.println("Point : " + nation.getPointGroup());
+//            System.out.println("Skors : " + nation.winsScore);
+//            System.out.println("Wins : " + nation.getWinsGroup());
+//            System.out.println("Draws : " + nation.getDrawsGroup());
+//            System.out.println("Loses : " + nation.getLosesGroup());
+//            System.out.println("");
+//        }
         return null;
     }
 
@@ -135,6 +151,11 @@ public class Group {
         System.out.println("winner " + groupName + " is " + winnerAndRunnerUp.get(0).name);
         System.out.println("runner up " + groupName + " is " + winnerAndRunnerUp.get(1).name);
         return winnerAndRunnerUp;
+    }
+
+    public void getWinnerAndRunnerUpNew() {
+        this.winner=groupMemberSorted.get(0);
+        this.runnerUp=groupMemberSorted.get(1);
     }
 
     public Nation getRunnerUp() {

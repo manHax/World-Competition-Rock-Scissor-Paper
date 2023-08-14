@@ -135,7 +135,8 @@ public class Competition {
                 match.startMatch();
             }
             group.getClassement();
-            group.getWinnerAndRunnerUp();
+//            group.getWinnerAndRunnerUp();
+            group.getWinnerAndRunnerUpNew();
 
             c.setKnockOutfase(group.winner, group.runnerUp);
             System.out.println("WINNER " + group.winner.name);
