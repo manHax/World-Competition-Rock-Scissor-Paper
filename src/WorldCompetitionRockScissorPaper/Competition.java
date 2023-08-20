@@ -57,6 +57,7 @@ public class Competition {
         ));
         ArrayList<Integer> temp = new ArrayList<>();
         myDB.truncate(myDB.nationsTable);
+        myDB.truncate(myDB.matchesTable);
         while (this.nations.size() < 32) {
             Random rand = new Random();
             int tempInt = rand.nextInt(54);

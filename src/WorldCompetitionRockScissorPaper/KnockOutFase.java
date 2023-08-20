@@ -1,10 +1,14 @@
 package WorldCompetitionRockScissorPaper;
 
+import WorldCompetitionRockScissorPaper.JDBC.JdbcConnection;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class KnockOutFase {
+    JdbcConnection myDB = new JdbcConnection();
     public String getFaseName() {
         if (thirdPlaceMember.size() == 2) return "Third Place Match";
         if (big16Member.size() == 16) return "Eight Final Round ";
@@ -53,13 +57,15 @@ public class KnockOutFase {
 
     }
 
-    public void doKnockOutBig16Fase() {
+    public void doKnockOutBig16Fase() throws SQLException, ClassNotFoundException {
         this.eightFinalMatchs = new ArrayList<>();
         if (thirdPlaceMember.size() == 2) {
             setThirdPotitionMatch(new Match(getFaseName(), thirdPlaceMember.get(0), thirdPlaceMember.get(1), new Date()));
+            myDB.insertMatch(getFaseName(), thirdPlaceMember.get(0).name, thirdPlaceMember.get(1).name,new java.sql.Date(new Date().getTime()));
         }
         for (int i = 0; i < big16Member.size(); i += 2) {
             setEightFinalMatchs(new Match(getFaseName() + (i + 1), big16Member.get(i), big16Member.get(i + 1), new Date()));
+            myDB.insertMatch(getFaseName(), thirdPlaceMember.get(0).name, thirdPlaceMember.get(1).name,new java.sql.Date(new Date().getTime()));
         }
 //        System.out.println(getEightFinalMatchs().size());
 //        int lenghtWinnerMember = big16Member.size();
