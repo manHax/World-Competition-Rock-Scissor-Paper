@@ -1,5 +1,8 @@
 package WorldCompetitionRockScissorPaper;
 
+import WorldCompetitionRockScissorPaper.JDBC.JdbcConnection;
+
+import java.sql.SQLException;
 import java.util.*;
 
 public class Group {
@@ -31,18 +34,20 @@ public class Group {
     List<Match> groupMatch = new ArrayList<>();
     List<Nation> groupMember;
     List<Nation> groupMemberSorted;
+    JdbcConnection myDB = new JdbcConnection();
 
     public List<Nation> getGroupMember() {
         return groupMember;
     }
 
 
-    public Group(String groupName, List<Nation> groupMember) {
+    public Group(String groupName, List<Nation> groupMember) throws SQLException, ClassNotFoundException {
         this.groupName = groupName;
         this.groupMember = groupMember;
         this.groupMemberSorted = this.groupMember;
         System.out.println(groupName);
         for (Nation na : groupMember) {
+            myDB.setNationGroup(na,groupName);
             System.out.println("> "+na.name);
         }
     }
@@ -153,7 +158,10 @@ public class Group {
         return winnerAndRunnerUp;
     }
 
-    public void getWinnerAndRunnerUpNew() {
+    public void getWinnerAndRunnerUpNew() throws SQLException, ClassNotFoundException {
+        for (int i = 2; i < groupMemberSorted.size(); i++) {
+            myDB.setNationAsKnockout(groupMemberSorted.get(i),groupName+" Fase");
+        }
         this.winner=groupMemberSorted.get(0);
         this.runnerUp=groupMemberSorted.get(1);
     }
@@ -224,11 +232,12 @@ public class Group {
         }
     }
 
-    public void doGroupFase() {
+    public void doGroupFase() throws SQLException, ClassNotFoundException {
         int player1 = 0;
         int player2 = 1;
         for (int i = 0; i < 6; i++) {
             setGroupMatch(new Match(groupName + " Match ke-" + (i + 1), getGroupMember().get(player1), getGroupMember().get(player2), new Date()));
+            myDB.insertMatch(getGroupMember().get(player1).name,getGroupMember().get(player2).name,groupName + " Match ke-" + (i + 1),new java.sql.Date(new Date().getTime()));
             player2++;
             if (player2 > 3) {
                 player1++;

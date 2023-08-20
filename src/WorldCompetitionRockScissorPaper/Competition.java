@@ -1,5 +1,8 @@
 package WorldCompetitionRockScissorPaper;
 
+import WorldCompetitionRockScissorPaper.JDBC.JdbcConnection;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +13,7 @@ public class Competition {
     List<Group> groups;
     List<Nation> winnerAllGroup = new ArrayList<>();
     List<Nation> runnerUpAllGroup = new ArrayList<>();
+    JdbcConnection myDB = new JdbcConnection();
     Nation champion;
     Nation runnerUp;
     Nation thirdPlace;
@@ -23,7 +27,7 @@ public class Competition {
         this.groups.add(groups);
     }
 
-    public Competition() {
+    public Competition() throws SQLException, ClassNotFoundException {
         nations = new ArrayList<>();
         groups = new ArrayList<>();
         this.generateNations();
@@ -38,7 +42,7 @@ public class Competition {
         this.nations.add(nation);
     }
 
-    public void generateNations() {
+    public void generateNations() throws SQLException, ClassNotFoundException {
         List<String> countries = new ArrayList<>(Arrays.asList(
                 "Argentina", "Australia", "Austria", "Belgium", "Bolivia",
                 "Brazil", "Cameroon", "Canada", "Chile", "China PR", "Colombia",
@@ -52,11 +56,13 @@ public class Competition {
                 "Uruguay", "Wales"
         ));
         ArrayList<Integer> temp = new ArrayList<>();
-        while (this.nations.size()<32){
+        myDB.truncate(myDB.nationsTable);
+        while (this.nations.size() < 32) {
             Random rand = new Random();
-            int tempInt =rand.nextInt(54);
+            int tempInt = rand.nextInt(54);
             if (!temp.contains(tempInt)) {
                 addNations(new Nation(countries.get(tempInt)));
+                myDB.insertNations(countries.get(tempInt));
                 temp.add(tempInt);
             }
         }
@@ -70,7 +76,7 @@ public class Competition {
 //        }
     }
 
-    public void generateGroup() {
+    public void generateGroup() throws SQLException, ClassNotFoundException {
         String[] stag = "A,B,C,D,E,F,G,H".split(",");
         for (int i = 0; i < 32; i += 4) {
             int j = i + 4;
@@ -83,48 +89,46 @@ public class Competition {
         this.runnerUpAllGroup.add(runnerUp);
     }
 
-    public void doKnockOutFase(KnockOutFase kc) {
+    public void doKnockOutFase(KnockOutFase kc) throws SQLException, ClassNotFoundException {
 //        KnockOutFase kc = new KnockOutFase(this.winnerAllGroup,runnerUpAllGroup);
         kc.doKnockOutBig16Fase();
         if (kc.thirdPlaceMember.size() == 2) {
             for (Match match : kc.thirdPotitionMatch) {
                 Nation knokedOut = match.startKnockOutMatch();
                 kc.thirdPlaceMember.remove(knokedOut);
-                this.thirdPlace=kc.thirdPlaceMember.get(0);
+                this.thirdPlace = kc.thirdPlaceMember.get(0);
             }
         }
-        if (kc.big16Member.size() == 4){
+        if (kc.big16Member.size() == 4) {
             for (Match match : kc.eightFinalMatchs) {
                 Nation knokedOut = match.startKnockOutMatch();
                 kc.thirdPlaceMember.add(knokedOut);
                 kc.big16Member.remove(knokedOut);
             }
             doKnockOutFase(kc);
-        }
-        else
-            if (kc.big16Member.size() == 2) {
+        } else if (kc.big16Member.size() == 2) {
             System.out.println("FINAL MATCH");
             for (Match match : kc.eightFinalMatchs) {
                 Nation knokedOut = match.startKnockOutMatch();
-                this.runnerUp=knokedOut;
+                this.runnerUp = knokedOut;
                 kc.big16Member.remove(knokedOut);
-                this.champion=kc.big16Member.get(0);
+                this.champion = kc.big16Member.get(0);
             }
         } else {
             for (Match match : kc.eightFinalMatchs) {
                 Nation knokedOut = match.startKnockOutMatch();
                 kc.big16Member.remove(knokedOut);
                 System.out.println("KNOCKEDOUT " + knokedOut.name);
-                match.player2.winnerKnockOut=false;
-                match.player1.winnerKnockOut=false;
-                System.out.println(match.player1.winnerKnockOut+" "+match.player2.winnerKnockOut);
+                match.player2.winnerKnockOut = false;
+                match.player1.winnerKnockOut = false;
+                System.out.println(match.player1.winnerKnockOut + " " + match.player2.winnerKnockOut);
             }
             System.out.println("NATIONS LEFT : " + kc.big16Member.size());
             doKnockOutFase(kc);
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         Competition c = new Competition();
 //        List<Nation> nations = c.getNations();
         List<Group> groups = c.getGroups();
@@ -145,11 +149,10 @@ public class Competition {
         KnockOutFase kc = new KnockOutFase(c.winnerAllGroup, c.runnerUpAllGroup);
         c.doKnockOutFase(kc);
         System.out.println("\n**************************");
-        System.out.println("Champion : "+c.champion.name);
-        System.out.println("Runner Up : "+c.runnerUp.name);
-        System.out.println("Third Place : "+c.thirdPlace.name);
+        System.out.println("Champion : " + c.champion.name);
+        System.out.println("Runner Up : " + c.runnerUp.name);
+        System.out.println("Third Place : " + c.thirdPlace.name);
         System.out.println("**************************");
-
 
 
 //        kc.doKnockOutBig16Fase();
