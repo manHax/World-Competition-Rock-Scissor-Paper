@@ -120,9 +120,11 @@ public class Match {
             }
             if (p1.wins == 5) {
                 p1.winnerKnockOut=true;
+                myDB.setResultMatch(this.matchId,p1.name,p1.wins, p2.wins);
                 System.out.println(p1.name + " Menang");
             } else if (p2.wins == 5) {
                 p2.winnerKnockOut=true;
+                myDB.setResultMatch(this.matchId,p2.name,p1.wins, p2.wins);
                 System.out.println(p2.name + " Menang");
             }
         }
