@@ -10,11 +10,11 @@ import java.util.List;
 public class KnockOutFase {
     JdbcConnection myDB = new JdbcConnection();
     public String getFaseName() {
+        if (big16Member.size() == 2) return "Final Round ";
         if (thirdPlaceMember.size() == 2) return "Third Place Match";
         if (big16Member.size() == 16) return "Eight Final Round ";
         if (big16Member.size() == 8) return "Quarter Final Round ";
         if (big16Member.size() == 4) return "Semi Final Round ";
-        if (big16Member.size() == 2) return "Final Round ";
         return null;
     }
 
