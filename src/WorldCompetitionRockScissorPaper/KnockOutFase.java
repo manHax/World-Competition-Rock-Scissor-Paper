@@ -11,7 +11,6 @@ public class KnockOutFase {
     JdbcConnection myDB = new JdbcConnection();
     public String getFaseName() {
         if (big16Member.size() == 2) return "Final Round ";
-        if (thirdPlaceMember.size() == 2) return "Third Place Match";
         if (big16Member.size() == 16) return "Eight Final Round ";
         if (big16Member.size() == 8) return "Quarter Final Round ";
         if (big16Member.size() == 4) return "Semi Final Round ";
@@ -60,7 +59,7 @@ public class KnockOutFase {
     public void doKnockOutBig16Fase() throws SQLException, ClassNotFoundException {
         this.eightFinalMatchs = new ArrayList<>();
         if (thirdPlaceMember.size() == 2) {
-            setThirdPotitionMatch(new Match(getFaseName(), thirdPlaceMember.get(0), thirdPlaceMember.get(1), new Date()));
+            setThirdPotitionMatch(new Match("Third Place Match", thirdPlaceMember.get(0), thirdPlaceMember.get(1), new Date()));
             myDB.insertMatch( thirdPlaceMember.get(0).name, thirdPlaceMember.get(1).name,getFaseName(),new java.sql.Date(new Date().getTime()));
         }
         for (int i = 0; i < big16Member.size(); i += 2) {
