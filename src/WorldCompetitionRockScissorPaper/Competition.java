@@ -41,6 +41,11 @@ public class Competition {
     public void addNations(Nation nation) {
         this.nations.add(nation);
     }
+    public void addIndonesia(List<String> countries,ArrayList<Integer> temp) throws SQLException, ClassNotFoundException {
+        addNations(new Nation(countries.get(0)));
+        myDB.insertNations(countries.get(0));
+        temp.add(0);
+    }
 
     public void generateNations() throws SQLException, ClassNotFoundException {
         List<String> countries = new ArrayList<>(Arrays.asList(
@@ -58,8 +63,7 @@ public class Competition {
         ArrayList<Integer> temp = new ArrayList<>();
         myDB.truncate(myDB.nationsTable);
         myDB.truncate(myDB.matchesTable);
-        addNations(new Nation(countries.get(0)));
-        temp.add(0);
+        addIndonesia(countries,temp);
         while (this.nations.size() < 32) {
             Random rand = new Random();
             int tempInt = rand.nextInt(54);
