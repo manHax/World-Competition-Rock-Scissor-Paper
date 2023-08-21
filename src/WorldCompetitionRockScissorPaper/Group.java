@@ -160,7 +160,7 @@ public class Group {
 
     public void getWinnerAndRunnerUpNew() throws SQLException, ClassNotFoundException {
         for (int i = 2; i < groupMemberSorted.size(); i++) {
-            myDB.setNationAsKnockout(groupMemberSorted.get(i),groupName+" Fase");
+            myDB.setNationAsKnockout(groupMemberSorted.get(i),"Fase "+groupName);
         }
         this.winner=groupMemberSorted.get(0);
         this.runnerUp=groupMemberSorted.get(1);

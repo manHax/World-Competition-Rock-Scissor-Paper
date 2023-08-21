@@ -9,11 +9,12 @@ import java.util.List;
 
 public class KnockOutFase {
     JdbcConnection myDB = new JdbcConnection();
-    public String getFaseName() {
+
+    public String getFaseName(int i) {
         if (big16Member.size() == 2) return "Final Round ";
-        if (big16Member.size() == 16) return "Eight Final Round ";
-        if (big16Member.size() == 8) return "Quarter Final Round ";
-        if (big16Member.size() == 4) return "Semi Final Round ";
+        if (big16Member.size() == 16) return "Eight Final Round " + i;
+        if (big16Member.size() == 8) return "Quarter Final Round " + i;
+        if (big16Member.size() == 4) return "Semi Final Round " + i;
         return null;
     }
 
@@ -60,11 +61,11 @@ public class KnockOutFase {
         this.eightFinalMatchs = new ArrayList<>();
         if (thirdPlaceMember.size() == 2) {
             setThirdPotitionMatch(new Match("Third Place Match", thirdPlaceMember.get(0), thirdPlaceMember.get(1), new Date()));
-            myDB.insertMatch( thirdPlaceMember.get(0).name, thirdPlaceMember.get(1).name,"Third Place Match",new java.sql.Date(new Date().getTime()));
+            myDB.insertMatch(thirdPlaceMember.get(0).name, thirdPlaceMember.get(1).name, "Third Place Match", new java.sql.Date(new Date().getTime()));
         }
         for (int i = 0; i < big16Member.size(); i += 2) {
-            setEightFinalMatchs(new Match(getFaseName() + (i + 1), big16Member.get(i), big16Member.get(i + 1), new Date()));
-            myDB.insertMatch( big16Member.get(i).name, big16Member.get(i + 1).name,getFaseName() + (i + 1),new java.sql.Date(new Date().getTime()));
+            setEightFinalMatchs(new Match(getFaseName(i == 0 ? i + 1 : i - 2) + (i + 1), big16Member.get(i), big16Member.get(i + 1), new Date()));
+            myDB.insertMatch(big16Member.get(i).name, big16Member.get(i + 1).name, getFaseName(i == 0 ? i + 1 : i - 2), new java.sql.Date(new Date().getTime()));
         }
 //        System.out.println(getEightFinalMatchs().size());
 //        int lenghtWinnerMember = big16Member.size();
