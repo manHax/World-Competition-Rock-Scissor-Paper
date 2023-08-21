@@ -112,8 +112,10 @@ public class Competition {
             for (Match match : kc.eightFinalMatchs) {
                 Nation knokedOut = match.startKnockOutMatch();
                 this.runnerUp = knokedOut;
+                System.out.println("KNOCKEDOUT " + knokedOut.name);
                 kc.big16Member.remove(knokedOut);
                 this.champion = kc.big16Member.get(0);
+                return;
             }
         } else {
             for (Match match : kc.eightFinalMatchs) {
