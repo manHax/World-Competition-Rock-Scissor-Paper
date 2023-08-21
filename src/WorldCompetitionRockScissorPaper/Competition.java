@@ -44,11 +44,11 @@ public class Competition {
 
     public void generateNations() throws SQLException, ClassNotFoundException {
         List<String> countries = new ArrayList<>(Arrays.asList(
-                "Argentina", "Australia", "Austria", "Belgium", "Bolivia",
+                "Indonesia","Argentina", "Australia", "Austria", "Belgium", "Bolivia",
                 "Brazil", "Cameroon", "Canada", "Chile", "China PR", "Colombia",
                 "Costa Rica", "Croatia", "Czech Republic", "Denmark", "Ecuador",
                 "Egypt", "England", "Finland", "France", "Germany", "Greece",
-                "Hungary", "India", "Indonesia", "Iran", "Iraq", "Italy", "Japan",
+                "Hungary", "India", "Iran", "Iraq", "Italy", "Japan",
                 "Mexico", "Netherlands", "New Zealand", "Nigeria", "Norway", "Paraguay",
                 "Peru", "Poland", "Portugal", "Romania", "Russia", "Saudi Arabia",
                 "Scotland", "Serbia", "Slovakia", "South Africa", "South Korea",
@@ -58,6 +58,8 @@ public class Competition {
         ArrayList<Integer> temp = new ArrayList<>();
         myDB.truncate(myDB.nationsTable);
         myDB.truncate(myDB.matchesTable);
+        addNations(new Nation(countries.get(0)));
+        temp.add(0);
         while (this.nations.size() < 32) {
             Random rand = new Random();
             int tempInt = rand.nextInt(54);
