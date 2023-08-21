@@ -65,7 +65,7 @@ public class KnockOutFase {
         }
         for (int i = 0; i < big16Member.size(); i += 2) {
             setEightFinalMatchs(new Match(getFaseName() + (i + 1), big16Member.get(i), big16Member.get(i + 1), new Date()));
-            myDB.insertMatch(getFaseName(), thirdPlaceMember.get(0).name, thirdPlaceMember.get(1).name,new java.sql.Date(new Date().getTime()));
+            myDB.insertMatch(getFaseName() + (i + 1), big16Member.get(i).name, big16Member.get(i + 1).name,new java.sql.Date(new Date().getTime()));
         }
 //        System.out.println(getEightFinalMatchs().size());
 //        int lenghtWinnerMember = big16Member.size();
