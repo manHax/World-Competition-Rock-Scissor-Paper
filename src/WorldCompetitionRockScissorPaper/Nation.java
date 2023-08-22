@@ -3,6 +3,15 @@ package WorldCompetitionRockScissorPaper;
 import java.util.Random;
 
 public class Nation {
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    String groupName;
     public String getKnockedOutAt() {
         return knockedOutAt;
     }

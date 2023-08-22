@@ -65,8 +65,7 @@ public class Competition {
         myDB.truncate(myDB.matchesTable);
         addIndonesia(countries,temp);
         while (this.nations.size() < 32) {
-            Random rand = new Random();
-            int tempInt = rand.nextInt(54);
+            int tempInt = new Random().nextInt(54);
             if (!temp.contains(tempInt)) {
                 addNations(new Nation(countries.get(tempInt)));
                 myDB.insertNations(countries.get(tempInt));

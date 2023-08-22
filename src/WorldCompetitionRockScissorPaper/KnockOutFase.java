@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class KnockOutFase {
     JdbcConnection myDB = new JdbcConnection();
@@ -49,10 +50,44 @@ public class KnockOutFase {
     List<Nation> knockOutMember;
 
     public KnockOutFase(List<Nation> winnerMember, List<Nation> runnerUpMember) {
-        for (int i = 0; i < runnerUpMember.size(); i++) {
-            big16Member.add(winnerMember.get(i));
-            big16Member.add(runnerUpMember.get(i));
+        List<Nation> allMember = new ArrayList<>();
+        allMember.addAll(winnerMember);
+        allMember.addAll(runnerUpMember);
+        int manyLoop=0;
+        while ( big16Member.size()<16) {
+            manyLoop+=1;
+            System.out.println(manyLoop);
+            int tempInt = new Random().nextInt(allMember.size());
+            int tempInt2 = new Random().nextInt(allMember.size());
+            System.out.println(">> "+allMember.size()+" | "+tempInt+" "+tempInt2);
+            if (tempInt2!=tempInt && !allMember.get(tempInt).getGroupName().equalsIgnoreCase(allMember.get(tempInt2).getGroupName())) {
+                Nation player1=allMember.get(tempInt);
+                Nation player2=allMember.get(tempInt2);
+                big16Member.add(player1);
+                big16Member.add(player2);
+                allMember.remove(player1);
+                allMember.remove(player2);
+                System.out.println(player1.name+" Vs. "+player2.name);
+            }
         }
+//        ArrayList<Integer> temp = new ArrayList<>();
+//        ArrayList<Integer> temp2 = new ArrayList<>();
+//        while ( big16Member.size()< 16) {
+//            int tempInt = new Random().nextInt(8);
+//            int tempInt2 = new Random().nextInt(8);
+//            if (!temp.contains(tempInt) && tempInt != tempInt2 && !temp2.contains(tempInt2)) {
+//                System.out.print("\nWinner "+winnerMember.get(tempInt).getName());
+//                big16Member.add(winnerMember.get(tempInt));
+//                temp.add(tempInt);
+//                System.out.println(" Vs. Runner "+runnerUpMember.get(tempInt2).getName());
+//                big16Member.add(runnerUpMember.get(tempInt2));
+//                temp2.add(tempInt2);
+//            }
+//        }
+//        for (int i = 0; i < runnerUpMember.size(); i++) {
+//            big16Member.add(winnerMember.get(i));
+//            big16Member.add(runnerUpMember.get(i));
+//        }
 //        System.out.println(big16Member.size());
 
     }

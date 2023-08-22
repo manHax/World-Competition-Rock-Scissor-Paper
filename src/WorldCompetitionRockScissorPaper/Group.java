@@ -47,6 +47,7 @@ public class Group {
         this.groupMemberSorted = this.groupMember;
         System.out.println(groupName);
         for (Nation na : groupMember) {
+            na.setGroupName(groupName);
             myDB.setNationGroup(na,groupName);
             System.out.println("> "+na.name);
         }

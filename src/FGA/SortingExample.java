@@ -1,8 +1,6 @@
 package FGA;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 class Student {
     private String name;
@@ -24,8 +22,37 @@ class Student {
 
 public class SortingExample {
     public static void main(String[] args) {
-        for (;;) {
-            System.out.println("Welcome to Java");
+        int loop=0;
+//        ArrayList<Integer> temp = new ArrayList<>();
+//        ArrayList<Integer> temp2 = new ArrayList<>();
+        List<String> winner = new ArrayList<>(Arrays.asList("1","2","3","4","5","6","7","8"));
+        List<String> runner = new ArrayList<>(Arrays.asList("q","w","e","r","t","y","u","i"));
+        List<String> allMember = new ArrayList<>();
+        allMember.addAll(winner);
+        allMember.addAll(runner);
+
+        while ( loop< 16) {
+            int tempInt = new Random().nextInt(allMember.size());
+            int tempInt2 = new Random().nextInt(allMember.size());
+            System.out.println(">> "+allMember.size()+" | "+tempInt+" "+tempInt2);
+            if (tempInt+allMember.size()/2 != tempInt2 && tempInt2!=tempInt) {
+//                System.out.println(tempInt+" "+allMember.get(tempInt));
+//                System.out.println(tempInt2+" "+allMember.get(tempInt2));
+                String player1=allMember.get(tempInt);
+                String player2=allMember.get(tempInt2);
+                allMember.remove(player1);
+                allMember.remove(player2);
+                System.out.println(player1+" Vs. "+player2);
+                loop+=2;
+//                System.out.println("\nWinner "+winner.get(tempInt));
+//                loop+=2;
+////                big16Member.add(winnerMember.get(tempInt));
+//                winner.remove(tempInt);
+//                System.out.println("Runner "+runner.get(tempInt2));
+////                big16Member.add(runnerUpMember.get(tempInt2));
+//                runner.remove(tempInt2);
+            }
+            //            System.out.println();
         }
 //        ArrayList<Student> students = new ArrayList<>();
 //        students.add(new Student("Alice", 22));
