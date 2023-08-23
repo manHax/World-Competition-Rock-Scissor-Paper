@@ -41,7 +41,7 @@ public class Competition {
     }
     public void addIndonesia(List<String> countries) throws SQLException {
         addNations(new Nation(countries.get(0)));
-        myDB.insertNations(countries.get(0));
+         JdbcConnection.insertNations(countries.get(0));
         countries.remove(0);
     }
 
@@ -58,14 +58,14 @@ public class Competition {
                 "Spain", "Sweden", "Switzerland", "Turkey", "Ukraine", "United States",
                 "Uruguay", "Wales"
         ));
-        myDB.truncate(JdbcConnection.NATION_TABLE);
-        myDB.truncate(JdbcConnection.MATCHES_TABLE);
+         JdbcConnection.truncate(JdbcConnection.NATION_TABLE);
+         JdbcConnection.truncate(JdbcConnection.MATCHES_TABLE);
         addIndonesia(countries);
         while (this.nations.size() < 32) {
             int tempInt = new Random().nextInt(countries.size());
             String country=countries.get(tempInt);
             addNations(new Nation(country));
-            myDB.insertNations(country);
+             JdbcConnection.insertNations(country);
             countries.remove(country);
         }
 

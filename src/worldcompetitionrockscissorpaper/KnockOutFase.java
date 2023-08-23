@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Random;
 
 public class KnockOutFase {
-    JdbcConnection myDB = new JdbcConnection();
 
     public String getFaseName(int i) {
         if (big16Member.size() == 2) return "Final Round ";
@@ -96,11 +95,11 @@ public class KnockOutFase {
         this.eightFinalMatchs = new ArrayList<>();
         if (thirdPlaceMember.size() == 2) {
             setThirdPotitionMatch(new Match("Third Place Match", thirdPlaceMember.get(0), thirdPlaceMember.get(1), new Date()));
-            myDB.insertMatch(thirdPlaceMember.get(0).name, thirdPlaceMember.get(1).name, "Third Place Match", new java.sql.Date(new Date().getTime()));
+            JdbcConnection.insertMatch(thirdPlaceMember.get(0).name, thirdPlaceMember.get(1).name, "Third Place Match", new java.sql.Date(new Date().getTime()));
         }
         for (int i = 0; i < big16Member.size(); i += 2) {
             setEightFinalMatchs(new Match(getFaseName(i == 0 ? i + 1 : i/2+1), big16Member.get(i), big16Member.get(i + 1), new Date()));
-            myDB.insertMatch(big16Member.get(i).name, big16Member.get(i + 1).name, getFaseName(i == 0 ? i + 1 : i/2+1), new java.sql.Date(new Date().getTime()));
+            JdbcConnection.insertMatch(big16Member.get(i).name, big16Member.get(i + 1).name, getFaseName(i == 0 ? i + 1 : i/2+1), new java.sql.Date(new Date().getTime()));
         }
 //        System.out.println(getEightFinalMatchs().size());
 //        int lenghtWinnerMember = big16Member.size();

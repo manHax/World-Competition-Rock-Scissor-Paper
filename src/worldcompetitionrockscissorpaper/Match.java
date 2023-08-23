@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class Match {
-    JdbcConnection myDB = new JdbcConnection();
 
     public String getMatchId() {
         return matchId;
@@ -66,19 +65,19 @@ public class Match {
             p2.setPointGroup(p2.pointGroup += 1);
             p1.setDrawsGroup(p1.drawsGroup += 1);
             p2.setDrawsGroup(p2.drawsGroup += 1);
-            myDB.setResultMatch(this.matchId,"DRAW",p1.wins, p2.wins);
+             JdbcConnection.setResultMatch(this.matchId,"DRAW",p1.wins, p2.wins);
             System.out.println("\nHasil Seri Pada match ini");
         } else if (p1.wins > p2.wins) {
             p1.setWinsGroup(p1.winsGroup += 1);
             p2.setLosesGroup(p2.losesGroup += 1);
             p1.setPointGroup(p1.pointGroup += 3);
-            myDB.setResultMatch(this.matchId,p1.name,p1.wins, p2.wins);
+             JdbcConnection.setResultMatch(this.matchId,p1.name,p1.wins, p2.wins);
             System.out.println("\nMatch dimenangkan " + p1.name);
         } else {
             p2.setWinsGroup(p2.winsGroup += 1);
             p1.setLosesGroup(p1.losesGroup += 1);
             p2.setPointGroup(p2.pointGroup += 3);
-            myDB.setResultMatch(this.matchId,p2.name,p1.wins, p2.wins);
+             JdbcConnection.setResultMatch(this.matchId,p2.name,p1.wins, p2.wins);
             System.out.println("\nMatch dimenangkan " + p2.name);
         }
     }
@@ -120,11 +119,11 @@ public class Match {
             }
             if (p1.wins == 5) {
                 p1.winnerKnockOut=true;
-                myDB.setResultMatch(this.matchId,p1.name,p1.wins, p2.wins);
+                 JdbcConnection.setResultMatch(this.matchId,p1.name,p1.wins, p2.wins);
                 System.out.println(p1.name + " Menang");
             } else if (p2.wins == 5) {
                 p2.winnerKnockOut=true;
-                myDB.setResultMatch(this.matchId,p2.name,p1.wins, p2.wins);
+                 JdbcConnection.setResultMatch(this.matchId,p2.name,p1.wins, p2.wins);
                 System.out.println(p2.name + " Menang");
             }
         }
@@ -137,8 +136,8 @@ public class Match {
         player1.setPlayGroup(player1.playGroup+=1);
         player2.setPlayGroup(player2.playGroup+=1);
         this.combatWithWins(player1, player2, 7);
-        myDB.updateNations(player1);
-        myDB.updateNations(player2);
+         JdbcConnection.updateNations(player1);
+         JdbcConnection.updateNations(player2);
     }
 
     public Nation startKnockOutMatch() throws SQLException {
@@ -149,7 +148,7 @@ public class Match {
 //        myDB.updateNations(player1);
 //        myDB.updateNations(player2);
         Nation knockedOut = player1.winnerKnockOut? player2 :player1;
-        myDB.setNationAsKnockout(knockedOut,matchId);
+         JdbcConnection.setNationAsKnockout(knockedOut,matchId);
         return knockedOut;
     }
 }

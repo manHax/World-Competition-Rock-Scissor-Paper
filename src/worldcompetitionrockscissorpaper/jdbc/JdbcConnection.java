@@ -6,7 +6,7 @@ import worldcompetitionrockscissorpaper.Nation;
 import java.sql.*;
 
 public class JdbcConnection {
-    private final Connection conn;
+    public static Connection conn;
     public static final String NATION_TABLE = "WKSP_BISMILLAH.NATIONS";
     public static final String MATCHES_TABLE = "WKSP_BISMILLAH.MATCHES";
     public static final String NATION_NAME = "NATION_NAME";
@@ -36,7 +36,7 @@ public class JdbcConnection {
         }
     }
 
-    public String generateQueryInsert(String tableName, String[] columns, Object[] values) {
+    private static String generateQueryInsert(String tableName, String[] columns, Object[] values) {
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO ").append(tableName).append(" (");
         for (String c : columns) {
@@ -55,7 +55,7 @@ public class JdbcConnection {
         return sb.toString();
     }
 
-    public String generateQueryUpdate(String tableName, String[] columns, Object[] values) {
+    private static String generateQueryUpdate(String tableName, String[] columns, Object[] values) {
         StringBuilder sb = new StringBuilder();
         //UPDATE NATIONS SET nation_name = ? WHERE id = ?
         sb.append("UPDATE ").append(tableName).append(" SET ");
@@ -68,13 +68,13 @@ public class JdbcConnection {
         return sb.toString();
     }
 
-    public void truncate(String tableName) throws SQLException {
+    public static void truncate(String tableName) throws SQLException {
         String sql = "TRUNCATE TABLE " + tableName;
         PreparedStatement truncate = conn.prepareStatement(sql);
         truncate.execute();
     }
 
-    public void insertNations(String nationName) throws SQLException {
+    public static void insertNations(String nationName) throws SQLException {
         String[] columns = {NATION_NAME, POINT_GROUP, PLAY_GROUP, DRAWS_GROUP, LOSES_GROUP, WINS_GROUP, WINS_SCORE};
         String[] values = {nationName, "0", "0", "0", "0", "0", "0"};
         String sql = generateQueryInsert(NATION_TABLE, columns, values);
@@ -82,7 +82,7 @@ public class JdbcConnection {
         insert.execute();
     }
 
-    public void updateNations(Nation nation)
+    public static void updateNations(Nation nation)
             throws SQLException {
         String[] columns = {NATION_NAME, POINT_GROUP, PLAY_GROUP, DRAWS_GROUP, LOSES_GROUP, WINS_GROUP, WINS_SCORE};
         String[] values = {nation.getName(), String.valueOf(nation.getPointGroup()), String.valueOf(nation.getPlayGroup()), String.valueOf(nation.getDrawsGroup()), String.valueOf(nation.getLosesGroup()), String.valueOf(nation.getWinsGroup()), String.valueOf(nation.getWinsScore())};
@@ -91,7 +91,7 @@ public class JdbcConnection {
         insert.execute();
     }
 
-    public void setNationAsKnockout(Nation nation, String knockedOutAt) throws SQLException {
+    public static void setNationAsKnockout(Nation nation, String knockedOutAt) throws SQLException {
         String[] columns = {NATION_NAME, KNOCK_OUT_AT};
         String[] values = {nation.getName(), knockedOutAt};
         String sql = generateQueryUpdate(NATION_TABLE, columns, values);
@@ -99,7 +99,7 @@ public class JdbcConnection {
         insert.execute();
     }
 
-    public void setNationGroup(Nation nation, String group) throws SQLException {
+    public static void setNationGroup(Nation nation, String group) throws SQLException {
         String[] columns = {NATION_NAME, NATION_GROUP};
         String[] values = {nation.getName(), group};
         String sql = generateQueryUpdate(NATION_TABLE, columns, values);
@@ -107,14 +107,14 @@ public class JdbcConnection {
         insert.execute();
     }
 
-    public void setResultMatch(String matchName, String winner, int scoreP1, int scoreP2) throws SQLException {
+    public static void setResultMatch(String matchName, String winner, int scoreP1, int scoreP2) throws SQLException {
         String[] columns = {MATCH_NAME, WINNER, SCORE_PLAYER_1, SCORE_PLAYER_2};
         String[] values = {matchName, winner, String.valueOf(scoreP1), String.valueOf(scoreP2)};
         String sql = generateQueryUpdate(MATCHES_TABLE, columns, values);
         PreparedStatement insert = conn.prepareStatement(sql);
         insert.execute();
     }
-    public void insertMatch(String player1, String player2, String matchName, Date matchDate) throws SQLException {
+    public static void insertMatch(String player1, String player2, String matchName, Date matchDate) throws SQLException {
         String[] columns = {MATCH_NAME, PLAYER_1, PLAYER_2, MATCH_DATE};
         Object[] values = {matchName, player1, player2, matchDate};
         String sql = generateQueryInsert(MATCHES_TABLE, columns, values);
