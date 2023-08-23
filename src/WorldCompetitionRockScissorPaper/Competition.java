@@ -65,9 +65,9 @@ public class Competition {
         addIndonesia(countries);
         while (this.nations.size() < 32) {
             int tempInt = new Random().nextInt(countries.size());
-            addNations(new Nation(countries.get(tempInt)));
-            myDB.insertNations(countries.get(tempInt));
             String country=countries.get(tempInt);
+            addNations(new Nation(country));
+            myDB.insertNations(country);
             countries.remove(country);
         }
 
