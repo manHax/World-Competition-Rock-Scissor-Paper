@@ -1,12 +1,10 @@
-package WorldCompetitionRockScissorPaper;
+package worldcompetitionrockscissorpaper;
 
-import WorldCompetitionRockScissorPaper.JDBC.JdbcConnection;
+import worldcompetitionrockscissorpaper.jdbc.JdbcConnection;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.time.Duration;
+import java.util.*;
 
 public class Competition {
     List<Nation> nations;
@@ -27,7 +25,7 @@ public class Competition {
         this.groups.add(groups);
     }
 
-    public Competition() throws SQLException, ClassNotFoundException {
+    public Competition() throws SQLException {
         nations = new ArrayList<>();
         groups = new ArrayList<>();
         this.generateNations();
@@ -41,13 +39,13 @@ public class Competition {
     public void addNations(Nation nation) {
         this.nations.add(nation);
     }
-    public void addIndonesia(List<String> countries) throws SQLException, ClassNotFoundException {
+    public void addIndonesia(List<String> countries) throws SQLException {
         addNations(new Nation(countries.get(0)));
         myDB.insertNations(countries.get(0));
         countries.remove(0);
     }
 
-    public void generateNations() throws SQLException, ClassNotFoundException {
+    public void generateNations() throws SQLException {
         List<String> countries = new ArrayList<>(Arrays.asList(
                 "Indonesia","Argentina", "Australia", "Austria", "Belgium", "Bolivia",
                 "Brazil", "Cameroon", "Canada", "Chile", "China PR", "Colombia",
@@ -60,8 +58,8 @@ public class Competition {
                 "Spain", "Sweden", "Switzerland", "Turkey", "Ukraine", "United States",
                 "Uruguay", "Wales"
         ));
-        myDB.truncate(myDB.nationsTable);
-        myDB.truncate(myDB.matchesTable);
+        myDB.truncate(JdbcConnection.NATION_TABLE);
+        myDB.truncate(JdbcConnection.MATCHES_TABLE);
         addIndonesia(countries);
         while (this.nations.size() < 32) {
             int tempInt = new Random().nextInt(countries.size());
@@ -80,7 +78,7 @@ public class Competition {
 //        }
     }
 
-    public void generateGroup() throws SQLException, ClassNotFoundException {
+    public void generateGroup() throws SQLException {
         String[] stag = "A,B,C,D,E,F,G,H".split(",");
         for (int i = 0; i < 32; i += 4) {
             int j = i + 4;
@@ -93,7 +91,7 @@ public class Competition {
         this.runnerUpAllGroup.add(runnerUp);
     }
 
-    public void doKnockOutFase(KnockOutFase kc) throws SQLException, ClassNotFoundException {
+    public void doKnockOutFase(KnockOutFase kc) throws SQLException {
 //        KnockOutFase kc = new KnockOutFase(this.winnerAllGroup,runnerUpAllGroup);
         kc.doKnockOutBig16Fase();
         if (kc.thirdPlaceMember.size() == 2) {
@@ -135,6 +133,8 @@ public class Competition {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        Date startTime = new Date(System.currentTimeMillis());
+        System.out.println("Start Time "+startTime);
         Competition c = new Competition();
 //        List<Nation> nations = c.getNations();
         List<Group> groups = c.getGroups();
@@ -159,6 +159,12 @@ public class Competition {
         System.out.println("Runner Up : " + c.runnerUp.name);
         System.out.println("Third Place : " + c.thirdPlace.name);
         System.out.println("**************************");
+
+        Duration duration = Duration.between(startTime.toInstant(),new Date(System.currentTimeMillis()).toInstant());
+        long minutes = duration.toMinutes() % 60;
+        long seconds = duration.getSeconds() % 60;
+
+        System.out.println("Lama Program Berjalan : "+ minutes + " menit " + seconds + " detik");
 
 
 //        kc.doKnockOutBig16Fase();

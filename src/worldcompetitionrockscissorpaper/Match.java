@@ -1,6 +1,6 @@
-package WorldCompetitionRockScissorPaper;
+package worldcompetitionrockscissorpaper;
 
-import WorldCompetitionRockScissorPaper.JDBC.JdbcConnection;
+import worldcompetitionrockscissorpaper.jdbc.JdbcConnection;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -60,7 +60,7 @@ public class Match {
         }
     }
 
-    public void matchResult(Nation p1, Nation p2) throws SQLException, ClassNotFoundException {
+    public void matchResult(Nation p1, Nation p2) throws SQLException {
         if (p1.wins == p2.wins) {
             p1.setPointGroup(p1.pointGroup += 1);
             p2.setPointGroup(p2.pointGroup += 1);
@@ -83,7 +83,7 @@ public class Match {
         }
     }
 
-    public void combatWithWins(Nation p1, Nation p2, int agr) throws SQLException, ClassNotFoundException {
+    public void combatWithWins(Nation p1, Nation p2, int agr) throws SQLException {
         p1.wins = 0;
         p1.loses = 0;
         p2.loses = 0;
@@ -130,7 +130,7 @@ public class Match {
         }
     }
 
-    public void startMatch() throws SQLException, ClassNotFoundException {
+    public void startMatch() throws SQLException {
         System.out.println("\n>> Start " + matchId+" <<");
         System.out.println(player1.name+" vs " + player2.name);
         System.out.println("Battle Start on " + matchDate);
@@ -141,7 +141,7 @@ public class Match {
         myDB.updateNations(player2);
     }
 
-    public Nation startKnockOutMatch() throws SQLException, ClassNotFoundException {
+    public Nation startKnockOutMatch() throws SQLException {
         System.out.println("\n>> Start " + matchId+" <<");
         System.out.println(player1.name+" vs " + player2.name);
         System.out.println("Battle Start on " + matchDate);

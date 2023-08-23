@@ -1,6 +1,6 @@
-package WorldCompetitionRockScissorPaper;
+package worldcompetitionrockscissorpaper;
 
-import WorldCompetitionRockScissorPaper.JDBC.JdbcConnection;
+import worldcompetitionrockscissorpaper.jdbc.JdbcConnection;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -41,7 +41,7 @@ public class Group {
     }
 
 
-    public Group(String groupName, List<Nation> groupMember) throws SQLException, ClassNotFoundException {
+    public Group(String groupName, List<Nation> groupMember) throws SQLException {
         this.groupName = groupName;
         this.groupMember = groupMember;
         this.groupMemberSorted = this.groupMember;
@@ -159,7 +159,7 @@ public class Group {
         return winnerAndRunnerUp;
     }
 
-    public void getWinnerAndRunnerUpNew() throws SQLException, ClassNotFoundException {
+    public void getWinnerAndRunnerUpNew() throws SQLException {
         for (int i = 2; i < groupMemberSorted.size(); i++) {
             myDB.setNationAsKnockout(groupMemberSorted.get(i),"Fase "+groupName);
         }
@@ -233,7 +233,7 @@ public class Group {
         }
     }
 
-    public void doGroupFase() throws SQLException, ClassNotFoundException {
+    public void doGroupFase() throws SQLException {
         int player1 = 0;
         int player2 = 1;
         for (int i = 0; i < 6; i++) {

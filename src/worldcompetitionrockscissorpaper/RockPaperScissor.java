@@ -1,4 +1,4 @@
-package WorldCompetitionRockScissorPaper;
+package worldcompetitionrockscissorpaper;
 
 public class RockPaperScissor {
     static String[] rockPaperScissor= {"Rock","Paper","Scissor"};

@@ -1,4 +1,4 @@
-package WorldCompetitionRockScissorPaper;
+package worldcompetitionrockscissorpaper;
 
 import java.util.Random;
 
@@ -92,8 +92,7 @@ public class Nation {
     }
 
     public void setHand() {
-        Random rand= new Random();
-        this.hand = rand.nextInt(3);
+        this.hand = new Random().nextInt(3);
         System.out.println("i'm from "+name+" menggunakan "+rockPaperScissor[this.hand]);
     }
 
@@ -101,7 +100,6 @@ public class Nation {
     String name;
 
     public Nation(String name) {
-//        System.out.println(name);
         this.name=name;
     }
 }
