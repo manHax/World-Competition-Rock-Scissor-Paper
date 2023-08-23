@@ -145,8 +145,6 @@ public class Match {
         System.out.println(player1.name+" vs " + player2.name);
         System.out.println("Battle Start on " + matchDate);
         this.combatWithWins(player1, player2, 5);
-//        myDB.updateNations(player1);
-//        myDB.updateNations(player2);
         Nation knockedOut = player1.winnerKnockOut? player2 :player1;
          JdbcConnection.setNationAsKnockout(knockedOut,matchId);
         return knockedOut;
