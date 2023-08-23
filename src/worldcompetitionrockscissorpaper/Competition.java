@@ -11,7 +11,6 @@ public class Competition {
     List<Group> groups;
     List<Nation> winnerAllGroup = new ArrayList<>();
     List<Nation> runnerUpAllGroup = new ArrayList<>();
-    JdbcConnection myDB = new JdbcConnection();
     Nation champion;
     Nation runnerUp;
     Nation thirdPlace;
@@ -164,6 +163,7 @@ public class Competition {
         long minutes = duration.toMinutes() % 60;
         long seconds = duration.getSeconds() % 60;
 
+        JdbcConnection.disconnect();
         System.out.println("Lama Program Berjalan : "+ minutes + " menit " + seconds + " detik");
 
 
