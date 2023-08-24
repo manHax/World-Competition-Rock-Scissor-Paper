@@ -2,7 +2,6 @@ package worldcompetitionrockscissorpaper;
 
 import worldcompetitionrockscissorpaper.jdbc.JdbcConnection;
 
-import java.sql.SQLException;
 import java.util.Date;
 
 public class Match {
@@ -59,7 +58,7 @@ public class Match {
         }
     }
 
-    public void matchResult(Nation p1, Nation p2) throws SQLException {
+    public void matchResult(Nation p1, Nation p2) {
         if (p1.wins == p2.wins) {
             p1.setPointGroup(p1.pointGroup += 1);
             p2.setPointGroup(p2.pointGroup += 1);
@@ -82,7 +81,7 @@ public class Match {
         }
     }
 
-    public void combatWithWins(Nation p1, Nation p2, int agr) throws SQLException {
+    public void combatWithWins(Nation p1, Nation p2, int agr) {
         p1.wins = 0;
         p1.loses = 0;
         p2.loses = 0;
@@ -129,7 +128,7 @@ public class Match {
         }
     }
 
-    public void startMatch() throws SQLException {
+    public void startMatch() {
         System.out.println("\n>> Start " + matchId+" <<");
         System.out.println(player1.name+" vs " + player2.name);
         System.out.println("Battle Start on " + matchDate);
@@ -140,7 +139,7 @@ public class Match {
          JdbcConnection.updateNations(player2);
     }
 
-    public Nation startKnockOutMatch() throws SQLException {
+    public Nation startKnockOutMatch() {
         System.out.println("\n>> Start " + matchId+" <<");
         System.out.println(player1.name+" vs " + player2.name);
         System.out.println("Battle Start on " + matchDate);

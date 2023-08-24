@@ -2,7 +2,6 @@ package worldcompetitionrockscissorpaper;
 
 import worldcompetitionrockscissorpaper.jdbc.JdbcConnection;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -91,7 +90,7 @@ public class KnockOutFase {
 
     }
 
-    public void doKnockOutBig16Fase() throws SQLException {
+    public void doKnockOutBig16Fase() {
         this.eightFinalMatchs = new ArrayList<>();
         if (thirdPlaceMember.size() == 2) {
             setThirdPotitionMatch(new Match("Third Place Match", thirdPlaceMember.get(0), thirdPlaceMember.get(1), new Date()));

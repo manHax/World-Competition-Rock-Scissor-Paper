@@ -24,7 +24,7 @@ public class Competition {
         this.groups.add(groups);
     }
 
-    public Competition() throws SQLException {
+    public Competition() {
         nations = new ArrayList<>();
         groups = new ArrayList<>();
         this.generateNations();
@@ -38,13 +38,13 @@ public class Competition {
     public void addNations(Nation nation) {
         this.nations.add(nation);
     }
-    public void addIndonesia(List<String> countries) throws SQLException {
+    public void addIndonesia(List<String> countries) {
         addNations(new Nation(countries.get(0)));
          JdbcConnection.insertNations(countries.get(0));
         countries.remove(0);
     }
 
-    public void generateNations() throws SQLException {
+    public void generateNations() {
         List<String> countries = new ArrayList<>(Arrays.asList(
                 "Indonesia","Argentina", "Australia", "Austria", "Belgium", "Bolivia",
                 "Brazil", "Cameroon", "Canada", "Chile", "China PR", "Colombia",
@@ -77,7 +77,7 @@ public class Competition {
 //        }
     }
 
-    public void generateGroup() throws SQLException {
+    public void generateGroup() {
         String[] stag = "A,B,C,D,E,F,G,H".split(",");
         for (int i = 0; i < 32; i += 4) {
             int j = i + 4;
@@ -90,7 +90,7 @@ public class Competition {
         this.runnerUpAllGroup.add(runnerUp);
     }
 
-    public void doKnockOutFase(KnockOutFase kc) throws SQLException {
+    public void doKnockOutFase(KnockOutFase kc) {
 //        KnockOutFase kc = new KnockOutFase(this.winnerAllGroup,runnerUpAllGroup);
         kc.doKnockOutBig16Fase();
         if (kc.thirdPlaceMember.size() == 2) {
@@ -131,7 +131,7 @@ public class Competition {
         }
     }
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    public static void main(String[] args) {
         Date startTime = new Date(System.currentTimeMillis());
         System.out.println("Start Time "+startTime);
         Competition c = new Competition();

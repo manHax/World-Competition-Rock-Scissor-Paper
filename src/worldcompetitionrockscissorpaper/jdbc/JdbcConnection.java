@@ -2,11 +2,15 @@ package worldcompetitionrockscissorpaper.jdbc;
 
 import worldcompetitionrockscissorpaper.Constants;
 import worldcompetitionrockscissorpaper.Nation;
+import worldcompetitionrockscissorpaper.SqlErrorException;
 
 import java.sql.*;
 
 public class JdbcConnection {
-    public static Connection conn;
+    private JdbcConnection() {
+    }
+
+    private static Connection conn;
     public static final String NATION_TABLE = "WKSP_BISMILLAH.NATIONS";
     public static final String MATCHES_TABLE = "WKSP_BISMILLAH.MATCHES";
     public static final String NATION_NAME = "NATION_NAME";
@@ -31,16 +35,20 @@ public class JdbcConnection {
         if (conn == null) {
             try {
                 Class.forName("oracle.jdbc.OracleDriver");
-                return DriverManager.getConnection(Constants.JDBC_URL, Constants.USERNAME_DB, Constants.PASSWORD_DB);
+                return DriverManager.getConnection(Constants.getJdbcUrl(), Constants.getUsernameDB(), Constants.getPasswordDb());
             } catch (ClassNotFoundException | SQLException e) {
-                throw new RuntimeException(e);
+                throw new SqlErrorException();
             }
         }
         return conn;
     }
 
-    public static void disconnect() throws SQLException {
-        if (conn != null) conn.close();
+    public static void disconnect() {
+        try {
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            throw new SqlErrorException();
+        }
 
     }
 
@@ -76,66 +84,87 @@ public class JdbcConnection {
         return sb.toString();
     }
 
-    public static void truncate(String tableName) throws SQLException {
+    public static void truncate(String tableName) {
         conn = getConnection(conn);
         String sql = "TRUNCATE TABLE " + tableName;
-        PreparedStatement truncate = conn.prepareStatement(sql);
-        truncate.execute();
+        try (PreparedStatement truncate = conn.prepareStatement(sql)) {
+            truncate.execute();
+        } catch (SQLException e) {
+            throw new SqlErrorException();
+        }
     }
 
-    public static void insertNations(String nationName) throws SQLException {
+    public static void insertNations(String nationName) {
         conn = getConnection(conn);
         String[] columns = {NATION_NAME, POINT_GROUP, PLAY_GROUP, DRAWS_GROUP, LOSES_GROUP, WINS_GROUP, WINS_SCORE};
         String[] values = {nationName, "0", "0", "0", "0", "0", "0"};
         String sql = generateQueryInsert(NATION_TABLE, columns, values);
-        PreparedStatement insert = conn.prepareStatement(sql);
-        insert.execute();
+        try (PreparedStatement insert = conn.prepareStatement(sql)) {
+            insert.execute();
+        } catch (SQLException e) {
+            throw new SqlErrorException();
+        }
     }
 
-    public static void updateNations(Nation nation) throws SQLException {
+    public static void updateNations(Nation nation) {
         conn = getConnection(conn);
         String[] columns = {NATION_NAME, POINT_GROUP, PLAY_GROUP, DRAWS_GROUP, LOSES_GROUP, WINS_GROUP, WINS_SCORE};
         String[] values = {nation.getName(), String.valueOf(nation.getPointGroup()), String.valueOf(nation.getPlayGroup()), String.valueOf(nation.getDrawsGroup()), String.valueOf(nation.getLosesGroup()), String.valueOf(nation.getWinsGroup()), String.valueOf(nation.getWinsScore())};
         String sql = generateQueryUpdate(NATION_TABLE, columns, values);
-        PreparedStatement insert = conn.prepareStatement(sql);
-        insert.execute();
+        try (PreparedStatement insert = conn.prepareStatement(sql)) {
+            insert.execute();
+        } catch (SQLException e) {
+            throw new SqlErrorException();
+        }
     }
 
-    public static void setNationAsKnockout(Nation nation, String knockedOutAt) throws SQLException {
+    public static void setNationAsKnockout(Nation nation, String knockedOutAt) {
         conn = getConnection(conn);
         String[] columns = {NATION_NAME, KNOCK_OUT_AT};
         String[] values = {nation.getName(), knockedOutAt};
         String sql = generateQueryUpdate(NATION_TABLE, columns, values);
-        PreparedStatement insert = conn.prepareStatement(sql);
-        insert.execute();
+        try (PreparedStatement insert = conn.prepareStatement(sql)) {
+            insert.execute();
+        } catch (SQLException e) {
+            throw new SqlErrorException();
+        }
     }
 
-    public static void setNationGroup(Nation nation, String group) throws SQLException {
+    public static void setNationGroup(Nation nation, String group) {
         conn = getConnection(conn);
         String[] columns = {NATION_NAME, NATION_GROUP};
         String[] values = {nation.getName(), group};
         String sql = generateQueryUpdate(NATION_TABLE, columns, values);
-        PreparedStatement insert = conn.prepareStatement(sql);
-        insert.execute();
+        try (PreparedStatement insert = conn.prepareStatement(sql)) {
+            insert.execute();
+        } catch (SQLException e) {
+            throw new SqlErrorException();
+        }
     }
 
-    public static void setResultMatch(String matchName, String winner, int scoreP1, int scoreP2) throws SQLException {
+    public static void setResultMatch(String matchName, String winner, int scoreP1, int scoreP2) {
         conn = getConnection(conn);
         String[] columns = {MATCH_NAME, WINNER, SCORE_PLAYER_1, SCORE_PLAYER_2};
         String[] values = {matchName, winner, String.valueOf(scoreP1), String.valueOf(scoreP2)};
         String sql = generateQueryUpdate(MATCHES_TABLE, columns, values);
-        PreparedStatement insert = conn.prepareStatement(sql);
-        insert.execute();
+        try (PreparedStatement insert = conn.prepareStatement(sql)) {
+            insert.execute();
+        } catch (SQLException e) {
+            throw new SqlErrorException();
+        }
     }
 
-    public static void insertMatch(String player1, String player2, String matchName, Date matchDate) throws SQLException {
+    public static void insertMatch(String player1, String player2, String matchName, Date matchDate) {
         conn = getConnection(conn);
         String[] columns = {MATCH_NAME, PLAYER_1, PLAYER_2, MATCH_DATE};
         Object[] values = {matchName, player1, player2, matchDate};
         String sql = generateQueryInsert(MATCHES_TABLE, columns, values);
-        PreparedStatement insert = conn.prepareStatement(sql);
-        insert.setDate(1, matchDate);
-        insert.execute();
+        try (PreparedStatement insert = conn.prepareStatement(sql)) {
+            insert.setDate(1, matchDate);
+            insert.execute();
+        } catch (SQLException e) {
+            throw new SqlErrorException();
+        }
     }
 
 }

@@ -40,7 +40,7 @@ public class Group {
     }
 
 
-    public Group(String groupName, List<Nation> groupMember) throws SQLException {
+    public Group(String groupName, List<Nation> groupMember) {
         this.groupName = groupName;
         this.groupMember = groupMember;
         this.groupMemberSorted = this.groupMember;
@@ -158,7 +158,7 @@ public class Group {
         return winnerAndRunnerUp;
     }
 
-    public void getWinnerAndRunnerUpNew() throws SQLException {
+    public void getWinnerAndRunnerUpNew() {
         for (int i = 2; i < groupMemberSorted.size(); i++) {
             JdbcConnection.setNationAsKnockout(groupMemberSorted.get(i),"Fase "+groupName);
         }
@@ -232,7 +232,7 @@ public class Group {
         }
     }
 
-    public void doGroupFase() throws SQLException {
+    public void doGroupFase() {
         int player1 = 0;
         int player2 = 1;
         for (int i = 0; i < 6; i++) {
