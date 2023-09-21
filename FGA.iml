@@ -10,7 +10,16 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/ojdbc8.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/ojdbc8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/ucp.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

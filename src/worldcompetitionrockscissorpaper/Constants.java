@@ -28,7 +28,7 @@ public class Constants {
                     }
                 }
             }
-            if (passwordDb == null || usernameDB == null || jdbcUrl == null) throw new LoadJdbcErrorException();
+            if (passwordDb == null || usernameDB == null || jdbcUrl == null) throw new LoadJdbcErrorException("File jdbc.properties failed to load");
         } catch (IOException | LoadJdbcErrorException e) {
             e.printStackTrace();
         }
