@@ -11,5 +11,8 @@ public class test {
         System.out.println("this class for test branch");
         System.out.println("ternyata nambah lagi");
         System.out.println("ternyata nambah lagi");
+        System.out.println("ternyata nambah lagi");
+        System.out.println("ternyata nambah lagi fixxx amend");
+        System.out.println("ternyata nambah lagi fixxx amend lagi");
     }
 }
